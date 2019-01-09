@@ -1,0 +1,14 @@
+version: '3.5'
+
+services:
+  frontend:
+    image: frontend
+    build: ../frontend
+    ports:
+      - 5000:5000
+  backend:
+    image: backend
+    build: ../backend
+    ports:
+      - 8000:8000
+      
