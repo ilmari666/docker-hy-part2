@@ -3,14 +3,14 @@ version: '3.5'
 services:
   frontend:
     image: frontend
-    build: ../frontend
+    build: frontend
     ports:
       - 5000:5000
     environment:
       - API_URL=http://localhost:8000
   backend:
     image: backend
-    build: ../backend
+    build: backend
     ports:
       - 8000:8000
     environment:
