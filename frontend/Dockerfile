@@ -1,6 +1,5 @@
 FROM ubuntu:16.04
 EXPOSE 5000
-ENV API_URL http://localhost:8000
 WORKDIR /frontend
 RUN apt-get update
 RUN apt install -y curl

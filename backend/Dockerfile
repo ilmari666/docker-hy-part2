@@ -1,6 +1,5 @@
 FROM ubuntu:16.04
 EXPOSE 8000
-ENV FRONT_URL http://localhost:5000
 WORKDIR /backend
 RUN apt-get update
 RUN apt install -y curl
