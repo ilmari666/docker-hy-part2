@@ -1,0 +1,56 @@
+version: '3.5'
+
+services:
+  proxy:
+    image: nginx
+    volumes: 
+       - ./nginx.conf:/etc/nginx/nginx.conf:ro 
+    ports:
+      - 80:80
+    depends_on:
+      - backend-server
+      - frontend-server
+  postgres-server:
+    image: postgres
+    ports:
+    - 5432:5432
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: example
+  redis-server:
+    image: redis
+    ports:
+      - 6379:6379
+    environment:
+      - VIRTUAL_HOST=redis.localtest.me 
+    depends_on:
+      - backend-server
+  frontend-server:
+    image: frontend
+    environment:
+      - VIRTUAL_HOST=frontend.localtest.me 
+    build:
+      context: frontend
+      args:
+        - API_URL=http://localhost
+    ports:
+      - 5000:5000
+  backend-server:
+    image: backend
+    build: backend 
+    ports:
+      - 8000:8000
+    depends_on:
+      - postgres-server
+    environment:
+#      - FRONT_URL=http://localhost:5000
+      - FRONT_URL=http://localhost
+      - REDIS=redis-server
+      - REDIS_PORT=6379
+      - VIRTUAL_HOST=backend.localtest.me
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=example
+      - DB_NAME=postgres
+      - DB_HOST=postgres-server
+  
