@@ -15,6 +15,8 @@ services:
       - 6379:6379
     environment:
       - VIRTUAL_HOST=redis.localtest.me 
+    depends_on:
+      - backend-server
   frontend-server:
     image: frontend
     environment:
